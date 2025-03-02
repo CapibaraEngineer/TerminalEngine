@@ -33,8 +33,8 @@ public:
 		
 
 	}
-
-	void debugObject() {
+	//debugObject() shows information about the object: name, visual, colision, layerPosition and Y,X posiiton
+	void debugObject() { 
 		std::cout << "object Debug - " << objectName << "\n";
 		std::cout << "viusal:" << visual << "\n";
 		std::cout << "colison:" << hasColision << "\n";
@@ -61,7 +61,7 @@ public:
 	bool colision = false;
 
 	int layerPosition = 0;
-	std::vector<std::array<int, 2>> positions; // primeiro é a coordenada X, depois a coordenada Y: X,Y;
+	std::vector<std::array<int, 2>> positions; // primeiro Ã© a coordenada X, depois a coordenada Y: X,Y;
 	int PositionYX[2] = { 0,0 };
 
 	BigGameObject(std::string _objectName, std::vector<std::vector<std::string>> _visual, bool _colision, int _layerPosition, std::vector<std::array<int, 2>> _positions) {
