@@ -16,82 +16,84 @@ class Rendering {
 protected:
 
 	vector2D vecRenderedFrame;
-	std::string RenderedFrame = "";
+	std::string renderedFrame = "";
 
-	void vec2DPieceToString(std::string vecRenderedFramePiece) {
-
-		int pieceSize = vecRenderedFramePiece.size();
-
-		for (int i = 0; i < pieceSize; i++) {
-
-			RenderedFrame.push_back(vecRenderedFramePiece.at(i));
-		}
-
+	void clearScreen() {
+		std::cout << "\x1B[2J\x1B[H"; // "limpa" o terminal, ele apenas desce o terminal escondendo o que esta atras na verdade. Estou usando essa aberrção pois é mais rapido que "system("cls");"
 	}
 
-	void frameRender(vector2D layer, bool firstInteration) {
+	void objectRender(layerList& gameLayerList, std::vector<GameObject> gameObjects) {
+		for (int i = 0; i < gameObjects.size(); i++) {
+			GameObject objToBeRendered = gameObjects[i];
+			gameLayerList[objToBeRendered.layerPosition].layer[objToBeRendered.PositionYX[0]][objToBeRendered.PositionYX[1]] = objToBeRendered.visual;
+		}
+	}
 
-		int numRows = layer.size();
-		int numCols = layer[0].size();
-		vecRenderedFrame.resize(numRows, std::vector<std::string>(numCols));
+	void vecToString(int numRows, int numCols) {
+		renderedFrame = "";
+		for (int i = 0; i < numRows; i++) {
 
-		if (firstInteration == true) {
-			for (int i = 0; i < numRows; i++) {
-				for (int ii = 0; ii < numCols; ii++) {
-					vecRenderedFrame[i][ii] = layer[i][ii];
-				}
+			if (i != 0) {
+				renderedFrame.push_back('\n');
+			}
+
+			for (int ii = 0; ii < numCols; ii++) {
+				renderedFrame.append(vecRenderedFrame[i][ii]);
+			}
+		}
+	}
+
+	void layerRender(const layerList& gameLayerList, unsigned __int8 layerIndex) {
+
+		vector2D currentLayer = gameLayerList[layerIndex].layer;
+
+		int numRows = currentLayer.size();
+		int numCols = currentLayer[0].size();
+
+		if (layerIndex == 0) {
+			vecRenderedFrame.resize(numRows, std::vector<std::string>(numCols));
+			for (int i = 0; i < numRows; ++i) {
+				std::copy(currentLayer[i].begin(), currentLayer[i].end(), vecRenderedFrame[i].begin());
 			}
 		}
 		else { // not the first interantion;
 			for (int i = 0; i < numRows; i++) {
 				for (int ii = 0; ii < numCols; ii++) {
-					if (layer[i][ii] != " ") {
-						vecRenderedFrame[i][ii] = layer[i][ii];
+					if (currentLayer[i][ii] != " ") {
+						vecRenderedFrame[i][ii] = currentLayer[i][ii];
 					}
 
 				}
 			}
 		}
 
-		//vector2D to String
-		//outpouting a stirng is faster than a vector 2D
-		RenderedFrame = "";
-		for (int i = 0; i < numRows; i++) {
-			if (i != 0) {
-				RenderedFrame.push_back('\n');
-			}
-
-			for (int ii = 0; ii < numCols; ii++) {
-				vec2DPieceToString(vecRenderedFrame[i][ii]);
-			}
+		if (layerIndex == gameLayerList.size() - 1) {
+			vecToString(numRows, numCols);
 		}
+		else {
+			layerRender(gameLayerList, layerIndex + 1);
+		}
+		
 
-	}
-
-	void outpoutFrame() {
-		std::cout << RenderedFrame;
 	}
 
 
 public:
 
-	void render(layerList gameLayerList) {
-		auto inicio = std::chrono::high_resolution_clock::now();
-
-
-		for (int i = 0; i < gameLayerList.size(); i++) {
-			frameRender(gameLayerList.at(i).layer, i < 0);
+	void render(layerList& gameLayerList, const std::vector<GameObject>& gameObjects) {
+	
+		if (gameLayerList.size() == 0) {
+			std::cout << "\033[31m provided gameLayerList has no layers to render\033[0m";
+			
 		}
 
+		objectRender(gameLayerList, gameObjects);
+
+		layerRender(gameLayerList, 0);
 		
-		std::cout << "\x1B[2J\x1B[H";//"limpa" o terminal, ele so desce o terminal escondendo oq esta atras na verdade. Estou usando essa aberrção pois é mais rapido que "system("cls");"
+		clearScreen();
 
-
-		outpoutFrame();
-		auto fim = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<double, std::milli> duracao = fim - inicio;
-		std::cout << "Tempo de execução: " << duracao.count() << " milissegundos" << std::endl;
-
+		std::cout << renderedFrame;
 	}
 
 };

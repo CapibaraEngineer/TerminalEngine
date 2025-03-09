@@ -11,38 +11,27 @@
 #include <array> 
 #include <map>
 
-#include "Vector2D.h"
+ 
+#include "Vector2D.h" //defines type "vector2D"
 #include "LayerList.h" //defines type "layerList"
 
 #include "GameLayer.hpp"
 #include "GameObject.hpp"
 #include "Rendering.hpp"
 
-std::vector<GameObject> gameObjectWithColission;
+Rendering gameRenderer; 
 
-bool gameRunning = true; //if the game is running, if false, the game will stop
+std::vector<GameObject> gameObjects; //list of all game objects
+
+bool isGameRunning = true; //if the game is running, if false, the game will stop
 
 
 void start(std::vector<GameObject> GameObjects) {
-
-
-	for (int i = 0; i < GameObjects.size(); i++) {
-		if (GameObjects.at(i).hasColision == true) {
-			gameObjectWithColission.push_back(GameObjects.at(i));
-		}
-	}
+	gameObjects = GameObjects;
 }
 
 void updater(layerList gameLayerList) {
-
-	for (int i = 0; i < gameObjectWithColission.size(); i++) {
-		GameObject GameObjectBeingUpdated = gameObjectWithColission.at(i);
-		gameLayerList.at(GameObjectBeingUpdated.layerPosition).layer[GameObjectBeingUpdated.PositionYX[0]][GameObjectBeingUpdated.PositionYX[1]] = GameObjectBeingUpdated.visual;
-	}
-	
-	//debug
-	for (int i = 0; i < gameObjectWithColission.size(); i++) {
-		std::cout << gameObjectWithColission.at(i).objectName;
-	}
+	gameRenderer.render(gameLayerList, gameObjects);
 }
+
 
