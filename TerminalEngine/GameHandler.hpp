@@ -28,7 +28,7 @@ public:
 
     // Atualiza o estado do jogo e renderiza as camadas
     void updater(layerList& gameLayerList) {
-        if (isRunning == false) { 
+        if (isGameRunning == false) { 
 			return;
         }
         gameRenderer.render(gameLayerList, gameObjects);

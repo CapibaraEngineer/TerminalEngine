@@ -42,7 +42,9 @@ layerList gameLayerList = { layer0, layer1 };
 
 GameHandler gameHandler;
 
-GameObject objeto("objeto", "W", true, 1, {1,4});
+GameObject objeto1("objeto", "W", true, 1, {1,4});
+
+GameObject objeto2("objeto", "M", true, 1, {2,5});
 
 
 
@@ -61,9 +63,9 @@ void update() {
     //    }
     //}
 
-    layer1.layer[2][3] = objeto.visual;
+    layer1.layer[2][3] = objeto1.visual;
 
-    objeto.debugObject();
+    objeto1.debugObject();
     
 
 
@@ -73,7 +75,7 @@ void update() {
 
 int main()
 {
-    gameHandler.start({ objeto });
+    gameHandler.start({ objeto1, objeto2 });
     
     
     while (gameHandler.isRunning() == true) {
