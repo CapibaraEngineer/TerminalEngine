@@ -11,27 +11,38 @@
 #include <array> 
 #include <map>
 
- 
-#include "Vector2D.h" //defines type "vector2D"
-#include "LayerList.h" //defines type "layerList"
-
+#include "Vector2D.h" // defines type "vector2D"
+#include "LayerList.h" // defines type "layerList"
 #include "GameLayer.hpp"
 #include "GameObject.hpp"
 #include "Rendering.hpp"
 
-Rendering gameRenderer; 
+class GameHandler {
+public:
+    GameHandler() : isGameRunning(true) {}
 
-std::vector<GameObject> gameObjects; //list of all game objects
+    // Inicia o jogo com uma lista de objetos
+    void start(const std::vector<GameObject>& GameObjects) {
+        gameObjects = GameObjects;
+    }
 
-bool isGameRunning = true; //if the game is running, if false, the game will stop
+    // Atualiza o estado do jogo e renderiza as camadas
+    void updater(const layerList& gameLayerList) {
+        gameRenderer.render(gameLayerList, gameObjects);
+    }
 
+    // Verifica se o jogo está em execução
+    bool isRunning() const {
+        return isGameRunning;
+    }
 
-void start(std::vector<GameObject> GameObjects) {
-	gameObjects = GameObjects;
-}
+    // Para o jogo
+    void stop() {
+        isGameRunning = false;
+    }
 
-void updater(layerList gameLayerList) {
-	gameRenderer.render(gameLayerList, gameObjects);
-}
-
-
+private:
+    Rendering gameRenderer; // Renderizador do jogo
+    std::vector<GameObject> gameObjects; // Lista de todos os objetos do jogo
+    bool isGameRunning; // Indica se o jogo está em execução
+};

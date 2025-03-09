@@ -47,8 +47,8 @@ public:
 
 };
 
-class BigGameObject {
-
+class BigGameObject {//codigo desatualizado, não use
+	
 public:
 	std::string objectName = "unnamed";
 
