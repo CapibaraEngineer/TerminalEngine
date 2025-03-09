@@ -22,7 +22,7 @@ public:
 	int layerPosition = 0; //the layer where the object is located
 	unsigned int PositionYX[2] = { 0,0 }; // the Y X position in the layer {Y,X}
 
-	GameObject(std::string _objectName, std::string _visual, bool _colision, int _layerPosition, std::array<unsigned int, 2> _PositionXY) {
+	GameObject(std::string _objectName, std::string _visual, bool _colision, unsigned int _layerPosition, std::array<unsigned int, 2> _PositionXY) {
 		objectName = _objectName;
 		visual = _visual;
 		hasColision = _colision;

@@ -40,6 +40,8 @@ GameLayer layer1({
 
 layerList gameLayerList = { layer0, layer1 };
 
+GameHandler gameHandler;
+
 GameObject objeto("objeto", "W", true, 1, {1,4});
 
 
@@ -62,20 +64,19 @@ void update() {
     layer1.layer[2][3] = objeto.visual;
 
     objeto.debugObject();
-
-
-    updater(gameLayerList);
     
- 
-   
+
+
+
+    gameHandler.updater(gameLayerList);
 }
 
 int main()
 {
-    start({ objeto });
+    gameHandler.start({ objeto });
     
     
-    while (isGameRunning == true) {
+    while (gameHandler.isRunning() == true) {
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         update();
     }
