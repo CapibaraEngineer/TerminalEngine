@@ -75,13 +75,13 @@ protected:
 
 	}
 
-
 public:
 
-	void render(layerList& gameLayerList, const std::vector<GameObject*>& gameObjects) {
+	int render(layerList& gameLayerList, const std::vector<GameObject*>& gameObjects) {
 		
 		if (gameLayerList.size() == 0) {
-			std::cout << "\033[31m provided gameLayerList has no layers to render\033[0m";
+			std::cerr<<"\033[31m Render error: Provided gameLayerList has no layers to render\n the program will now exit\033[0m";
+			return 1;
 			
 		}
 		gameLayerListCopy = gameLayerList;
@@ -93,6 +93,8 @@ public:
 		clearScreen();
 
 		std::cout << renderedFrame;
+
+		return 0;
 	}
 
 };

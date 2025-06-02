@@ -12,7 +12,7 @@
 #include <array> 
 #include <map>
 
-#include "LayerList.hpp" // defines type "layerList", and inderectly defines gameLlayer and vector2D
+#include "LayerList.hpp" // defines type "layerList", and indirectly defines gameLlayer and vector2D
 #include "GameLayer.hpp"
 #include "GameObject.hpp"
 #include "Rendering.hpp"
@@ -28,13 +28,15 @@ public:
 
     // Atualiza o estado do jogo e renderiza as camadas
     void updater(layerList& gameLayerList) {
-        if (isGameRunning == false) { 
-            for(size_t i = 0; i < gameObjects.size(); i++) {
-				delete gameObjects.at(i); // Deleta os objetos do jogo, quando o jogo não está rodando
-			}
-			return;
+        if (!isGameRunning) {
+            for (size_t i = 0; i < gameObjects.size(); i++) {
+                delete gameObjects.at(i); // Deleta os objetos do jogo, quando o jogo não está rodando
+            }
+            return;
         }
-        gameRenderer.render(gameLayerList, gameObjects);
+        if (gameRenderer.render(gameLayerList, gameObjects) != 0) { //render error
+            isGameRunning = false;
+        }
     }
 
     // Verifica se o jogo está em execução
@@ -53,8 +55,10 @@ public:
 		}
 	}
 
+    // Adiciona um novo objeto à lista de objetos do jogo
+
     void addNewGameObject(GameObject* newGameObject) {
-        gameObjects.push_back(newGameObject); // Adiciona um novo objeto à lista de objetos do jogo
+        gameObjects.push_back(newGameObject); 
 	}
 
     void deleteGameObject(GameObject* gameObjectToRemove) {
@@ -65,10 +69,8 @@ public:
 		}
     }
 
+private:
 
-
-
-protected:
     Rendering gameRenderer; // Renderizador do jogo
     std::vector<GameObject*> gameObjects; // Lista de todos os objetos do jogo
     bool isGameRunning; // Indica se o jogo está em execução

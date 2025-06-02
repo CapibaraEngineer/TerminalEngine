@@ -7,10 +7,8 @@
 
 #include "Vector2D.hpp"
 
-
 class GameObject { // game object
 public:
-
 
 	std::string objectName = "unnamed"; // name of the object
 
@@ -29,8 +27,6 @@ public:
 
 		PositionYX[0] = _PositionXY[0];
 		PositionYX[1] = _PositionXY[1];
-		
-
 	}
 	//debugObject() shows information about the object: name, visual, colision, layerPosition and Y,X posiiton
 	void debugObject() const { 
@@ -39,11 +35,7 @@ public:
 		std::cout << "colison:" << hasColision << "\n";
 		std::cout << "layerPosition:" << layerPosition << "\n";
 		std::cout << "positons: Y = " << PositionYX[0] << " | X = " << PositionYX[1] << "\n";
-
 	}
-
-
-
 };
 
 class BigGameObject {//codigo desatualizado, não use, vai ser refeito em algum momento

@@ -38,7 +38,7 @@ GameLayer layer1({
     );
 
 
-layerList gameLayerList = { layer0, layer1 };
+layerList gameLayerList = { layer0, layer1};
 
 GameHandler gameHandler;
 
