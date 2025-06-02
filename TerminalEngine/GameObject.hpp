@@ -35,7 +35,7 @@ public:
 	}
 	//debugObject() shows information about the object: name, visual, colision, layerPosition and Y,X posiiton
 	void debugObject() { 
-		std::cout << "object Debug - " << objectName << "\n";
+		std::cout << "\nobject Debug - " << objectName << "\n";
 		std::cout << "viusal:" << visual << "\n";
 		std::cout << "colison:" << hasColision << "\n";
 		std::cout << "layerPosition:" << layerPosition << "\n";
@@ -47,7 +47,7 @@ public:
 
 };
 
-class BigGameObject {//codigo desatualizado, não use
+class BigGameObject {//codigo desatualizado, não use, vai ser refeito em algum momento
 	
 public:
 	std::string objectName = "unnamed";

@@ -5,6 +5,7 @@
 #include <thread>
 #include <conio.h>
 #include <stdlib.h>
+#include <Windows.h>
 #include <chrono>
 #include <string>
 #include <vector>
@@ -22,13 +23,16 @@ public:
     GameHandler() : isGameRunning(true) {}
 
     // Inicia o jogo com uma lista de objetos
-    void start(const std::vector<GameObject>& GameObjects) {
+    void start(const std::vector<GameObject*>& GameObjects) {
         gameObjects = GameObjects;
     }
 
     // Atualiza o estado do jogo e renderiza as camadas
     void updater(layerList& gameLayerList) {
         if (isGameRunning == false) { 
+            for(size_t i = 0; i < gameObjects.size(); i++) {
+				delete gameObjects.at(i); // Deleta os objetos do jogo, quando o jogo não está rodando
+			}
 			return;
         }
         gameRenderer.render(gameLayerList, gameObjects);
@@ -44,8 +48,29 @@ public:
         isGameRunning = false;
     }
 
-private:
+	void debugAllObjects() {
+		for (int i = 0; i < gameObjects.size(); i++) {
+			gameObjects.at(i)->debugObject();
+		}
+	}
+
+    void addNewGameObject(GameObject* newGameObject) {
+        gameObjects.push_back(newGameObject); // Adiciona um novo objeto à lista de objetos do jogo
+	}
+
+    void deleteGameObject(GameObject* gameObjectToRemove) {
+        auto gameObjectToRemovePosition = std::find(gameObjects.begin(), gameObjects.end(), gameObjectToRemove);
+        if (gameObjectToRemovePosition != gameObjects.end()) {
+            delete *gameObjectToRemovePosition; // Deleta o objeto do jogo
+            gameObjects.erase(gameObjectToRemovePosition); // Remove o ponteiro da lista de objetos do jogo
+		}
+    }
+
+
+
+
+protected:
     Rendering gameRenderer; // Renderizador do jogo
-    std::vector<GameObject> gameObjects; // Lista de todos os objetos do jogo
+    std::vector<GameObject*> gameObjects; // Lista de todos os objetos do jogo
     bool isGameRunning; // Indica se o jogo está em execução
 };

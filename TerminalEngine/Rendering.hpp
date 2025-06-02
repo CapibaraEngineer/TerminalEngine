@@ -11,21 +11,22 @@
 #include "Vector2D.h"
 #include "LayerList.h"
 
-
 class Rendering {
 protected:
 
+	layerList gameLayerListCopy;
 	vector2D vecRenderedFrame;
 	std::string renderedFrame = "";
 
 	void clearScreen() {
-		std::cout << "\x1B[2J\x1B[H"; // "limpa" o terminal, ele apenas desce o terminal escondendo o que esta atras na verdade. Estou usando essa aberrção pois é mais rapido que "system("cls");"
+		std::cout << "\x1B[2J\x1B[H"; // "limpa" o terminal, ele apenas desce o terminal escondendo o que esta atras na verdade. Estou usando essa aberrção porque em testes ele foi mais rapido que o system("cls")
 	}
 
-	void objectRender(layerList& gameLayerList, std::vector<GameObject> gameObjects) {
+	void objectRender(layerList& gameLayerList, std::vector<GameObject*> gameObjects) {
+		
 		for (int i = 0; i < gameObjects.size(); i++) {
-			GameObject objToBeRendered = gameObjects[i];
-			gameLayerList[objToBeRendered.layerPosition].layer[objToBeRendered.PositionYX[0]][objToBeRendered.PositionYX[1]] = objToBeRendered.visual;
+			GameObject* objToBeRendered = gameObjects.at(i);
+			gameLayerList[objToBeRendered->layerPosition].layer[objToBeRendered->PositionYX[0]][objToBeRendered->PositionYX[1]] = objToBeRendered->visual;
 		}
 	}
 
@@ -80,16 +81,17 @@ protected:
 
 public:
 
-	void render(layerList& gameLayerList, const std::vector<GameObject>& gameObjects) {
-	
+	void render(layerList& gameLayerList, const std::vector<GameObject*>& gameObjects) {
+		
 		if (gameLayerList.size() == 0) {
 			std::cout << "\033[31m provided gameLayerList has no layers to render\033[0m";
 			
 		}
+		gameLayerListCopy = gameLayerList;
 
-		objectRender(gameLayerList, gameObjects);
+		objectRender(gameLayerListCopy, gameObjects);
 
-		layerRender(gameLayerList, 0);
+		layerRender(gameLayerListCopy, 0);
 		
 		clearScreen();
 

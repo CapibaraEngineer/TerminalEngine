@@ -42,33 +42,39 @@ layerList gameLayerList = { layer0, layer1 };
 
 GameHandler gameHandler;
 
-GameObject objeto1("objeto", "W", true, 1, {1,4});
+GameObject* objeto1 = new GameObject("objeto1", "W", true, 1, {2,4});
 
-GameObject objeto2("objeto", "M", true, 1, {2,5});
-
-
+GameObject* objeto2 = new GameObject("objeto2", "M", true, 1, {2,5});
 
 void update() {
 
-    //while (_kbhit()) {
-    //    char tecla = ' ';
-    //    tecla = _getch();
-    //    switch (tecla) {
-    //    case 'a':
-    //    case 'A':
-    //        //objeto.PositionYX[1] -= 1;
-    //        break;
-    //    default:
-    //        break;
-    //    }
-    //}
+    while (_kbhit()) {
+        char tecla = ' ';
+        tecla = _getch();
+        switch (tecla) {
+        case 'a':
+        case 'A':
+            objeto1->PositionYX[1] -= 1;
+            break;
+        case 'd':
+        case 'D':
+            objeto1->PositionYX[1] += 1;
+            break;
+        case 'w':
+        case 'W':
+            objeto1->PositionYX[0] -= 1;
+            break;
+        case 's':
+        case 'S':
+            objeto1->PositionYX[0] += 1;
+            break;
+        default:
+			std::cout << "Tecla não reconhecida" << std::endl;
+            break;
+        }
+    }
 
-    layer1.layer[2][3] = objeto1.visual;
-
-    objeto1.debugObject();
-    
-
-
+	gameHandler.debugAllObjects();
 
     gameHandler.updater(gameLayerList);
 }
