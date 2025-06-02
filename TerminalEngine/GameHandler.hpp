@@ -12,8 +12,7 @@
 #include <array> 
 #include <map>
 
-#include "Vector2D.h" // defines type "vector2D"
-#include "LayerList.h" // defines type "layerList"
+#include "LayerList.hpp" // defines type "layerList", and inderectly defines gameLlayer and vector2D
 #include "GameLayer.hpp"
 #include "GameObject.hpp"
 #include "Rendering.hpp"

@@ -1,7 +1,7 @@
 
 #include <iostream>
-#include "Vector2D.h"
-#include "LayerList.h"
+#include "Vector2D.hpp"
+#include "LayerList.hpp"
 
 #include "GameLayer.hpp"
 #include "GameObject.hpp"
@@ -46,7 +46,7 @@ GameObject* objeto1 = new GameObject("objeto1", "W", true, 1, {2,4});
 
 GameObject* objeto2 = new GameObject("objeto2", "M", true, 1, {2,5});
 
-void update() {
+static void update() {
 
     while (_kbhit()) {
         char tecla = ' ';

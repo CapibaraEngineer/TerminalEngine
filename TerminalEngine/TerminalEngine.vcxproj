@@ -134,10 +134,10 @@
   <ItemGroup>
     <ClInclude Include="GameLayer.hpp" />
     <ClInclude Include="GameObject.hpp" />
-    <ClInclude Include="LayerList.h" />
+    <ClInclude Include="LayerList.hpp" />
     <ClInclude Include="Rendering.hpp" />
     <ClInclude Include="GameHandler.hpp" />
-    <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="Vector2D.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Oprojeto.txt" />

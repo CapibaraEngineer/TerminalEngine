@@ -5,8 +5,7 @@
 #include <vector>
 #include <string>
 
-
-#include "Vector2D.h"
+#include "Vector2D.hpp"
 
 
 class GameObject { // game object
@@ -34,7 +33,7 @@ public:
 
 	}
 	//debugObject() shows information about the object: name, visual, colision, layerPosition and Y,X posiiton
-	void debugObject() { 
+	void debugObject() const { 
 		std::cout << "\nobject Debug - " << objectName << "\n";
 		std::cout << "viusal:" << visual << "\n";
 		std::cout << "colison:" << hasColision << "\n";

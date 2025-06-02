@@ -1,15 +1,12 @@
 #pragma once
 
 #include <iostream>
-#include <thread>
-#include <chrono>
 #include <vector>
 #include <array> 
-#include <map>
 
 #include "GameLayer.hpp"
-#include "Vector2D.h"
-#include "LayerList.h"
+#include "Vector2D.hpp"
+#include "LayerList.hpp"
 
 class Rendering {
 protected:
@@ -30,15 +27,15 @@ protected:
 		}
 	}
 
-	void vecToString(int numRows, int numCols) {
+	void vecToString(size_t numRows, size_t numCols) {
 		renderedFrame = "";
-		for (int i = 0; i < numRows; i++) {
+		for (size_t i = 0; i < numRows; i++) {
 
 			if (i != 0) {
 				renderedFrame.push_back('\n');
 			}
 
-			for (int ii = 0; ii < numCols; ii++) {
+			for (size_t ii = 0; ii < numCols; ii++) {
 				renderedFrame.append(vecRenderedFrame[i][ii]);
 			}
 		}
@@ -48,18 +45,18 @@ protected:
 
 		vector2D currentLayer = gameLayerList[layerIndex].layer;
 
-		int numRows = currentLayer.size();
-		int numCols = currentLayer[0].size();
+		size_t numRows = currentLayer.size();
+		size_t numCols = currentLayer[0].size();
 
 		if (layerIndex == 0) {
 			vecRenderedFrame.resize(numRows, std::vector<std::string>(numCols));
-			for (int i = 0; i < numRows; ++i) {
+			for (size_t i = 0; i < numRows; ++i) {
 				std::copy(currentLayer[i].begin(), currentLayer[i].end(), vecRenderedFrame[i].begin());
 			}
 		}
 		else { // not the first interantion;
-			for (int i = 0; i < numRows; i++) {
-				for (int ii = 0; ii < numCols; ii++) {
+			for (size_t i = 0; i < numRows; i++) {
+				for (size_t ii = 0; ii < numCols; ii++) {
 					if (currentLayer[i][ii] != " ") {
 						vecRenderedFrame[i][ii] = currentLayer[i][ii];
 					}
